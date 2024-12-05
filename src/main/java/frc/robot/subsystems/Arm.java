@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.xrp.XRPServo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.lib.g;
 
 public class Arm extends SubsystemBase {
   private final XRPServo m_armServo;
@@ -18,9 +19,16 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
+    setAngle(g.ARM.currentAngle);
     // This method will be called once per scheduler run
   }
-
+  public void toggleAngle(){
+    if(g.ARM.currentAngle == g.ARM.RETRACT_VALUE){
+      g.ARM.currentAngle = g.ARM.EXTEND_VALUE;
+    }else {
+      g.ARM.currentAngle = g.ARM.RETRACT_VALUE;
+    }
+  }
   /**
    * Set the current angle of the arm (0 - 180 degrees).
    *

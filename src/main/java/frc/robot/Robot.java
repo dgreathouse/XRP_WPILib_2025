@@ -85,13 +85,13 @@ public class Robot extends TimedRobot {
 
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
-    
   }
 
   private void configureButtonBindings() {
      g.OI.DRIVER_RESET_YAW.onTrue(new InstantCommand(()-> {g.ROBOT.drive.resetGyro();}, g.ROBOT.drive));
-     
+     g.OI.DRIVER_EXTEND_ARM.onTrue(new InstantCommand(()-> {g.ROBOT.arm.toggleAngle();}, g.ROBOT.arm));
   }
+  
   /** This function is called once when the robot is first started up. */
   @Override
   public void simulationInit() {}

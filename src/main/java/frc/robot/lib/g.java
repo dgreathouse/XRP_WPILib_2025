@@ -4,7 +4,6 @@
 
 package frc.robot.lib;
 
-import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj.xrp.XRPGyro;
 import edu.wpi.first.wpilibj.xrp.XRPOnBoardIO;
@@ -18,13 +17,16 @@ import frc.robot.subsystems.Drivetrain;
 /** Add your docs here. */
 public class g {
     public static class ARM{
-
+        public static final double EXTEND_VALUE = 0.5;
+        public static final double RETRACT_VALUE = 0.25;
+        public static double currentAngle = RETRACT_VALUE;
     }
     public static class OI {
         public static final int driverControllerPort = 0;
         public static CommandPS5Controller driverController = new CommandPS5Controller(driverControllerPort);
         public static final double driverControllerDeadband = 0.02;
         public static final Trigger DRIVER_RESET_YAW = driverController.triangle();
+        public static final Trigger DRIVER_EXTEND_ARM = driverController.R1();
 
     }
     public static class ROBOT{
@@ -36,7 +38,8 @@ public class g {
         public static double currentAngle = 0.0;
         public static XRPOnBoardIO boardIO = new XRPOnBoardIO();
     }
-    public static class DRIVETRAIN{  private static final double GEAR_RATIO =
+    public static class DRIVETRAIN{  
+        private static final double GEAR_RATIO =
         (30.0 / 14.0) * (28.0 / 16.0) * (36.0 / 9.0) * (26.0 / 8.0); // 48.75:1
         public static final double WHEEL_DIAMETER_inch = 2.3622;
         public static final double MOTOR_CNTS_PER_SHAFT_REV = 12.0;
@@ -46,4 +49,5 @@ public class g {
         public static final double TURN_KI = 0.01;
         public static final double TURN_KD = 0.0;
     }
+
 }
