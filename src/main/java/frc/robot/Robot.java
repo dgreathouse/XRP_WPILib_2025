@@ -10,48 +10,62 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.commandGroups.AutonomousTime;
+import frc.robot.commandGroups.DoNothing;
+import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.DrivetrainDefaultCommand;
 import frc.robot.lib.g;
 
 /**
- * The methods in this class are called automatically corresponding to each mode, as described in
- * the TimedRobot documentation. If you change the name of this class or the package after creating
+ * The methods in this class are called automatically corresponding to each
+ * mode, as described in
+ * the TimedRobot documentation. If you change the name of this class or the
+ * package after creating
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
- // Create SmartDashboard chooser for autonomous routines
+  // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   public Robot() {
     g.ROBOT.drive.setDefaultCommand(new DrivetrainDefaultCommand());
-    //m_chooser.addOption("Turn", new AutonomousTime());
-    m_chooser.setDefaultOption("Turn", new AutonomousTime());
+    g.ROBOT.arm.setDefaultCommand(new ArmDefaultCommand());
+
+    m_chooser.setDefaultOption("Do Nothing", new DoNothing());
     SmartDashboard.putData(m_chooser);
     configureButtonBindings();
   }
 
+  private void configureButtonBindings() {
+    g.OI.DRIVER_RESET_YAW.onTrue(new InstantCommand(() -> {g.ROBOT.drive.resetGyro();}, g.ROBOT.drive));
+    g.OI.DRIVER_EXTEND_ARM.onTrue(new InstantCommand(() -> {g.ROBOT.arm.toggleAngle();}, g.ROBOT.arm));
+    g.OI.DRIVER_TOGGLE_SPEED.onTrue(new InstantCommand(() -> g.ROBOT.drive.toggleSpeed(), g.ROBOT.drive));
+  }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Range", g.ROBOT.rangeFinder.getDistanceInches());
+    SmartDashboard.putNumber("Range_inch", g.ROBOT.rangeFinder.getDistanceInches());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /**
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
+   */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = getAutonomousCommand();
@@ -64,7 +78,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
   public void teleopInit() {
@@ -80,21 +95,17 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    
+
   }
 
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
   }
 
-  private void configureButtonBindings() {
-     g.OI.DRIVER_RESET_YAW.onTrue(new InstantCommand(()-> {g.ROBOT.drive.resetGyro();}, g.ROBOT.drive));
-     g.OI.DRIVER_EXTEND_ARM.onTrue(new InstantCommand(()-> {g.ROBOT.arm.toggleAngle();}, g.ROBOT.arm));
-  }
-  
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+  }
 
   /** This function is called periodically whilst in simulation. */
   @Override

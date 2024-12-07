@@ -28,8 +28,8 @@ double cnt = 0;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double x = -g.OI.driverController.getRawAxis(1);
-    double y = -g.OI.driverController.getRawAxis(0);
+    double x = g.OI.driverController.getRawAxis(1);
+    double y = g.OI.driverController.getRawAxis(0);
     g.ROBOT.drive.arcadeDrive(x,y);
   }
 
@@ -40,6 +40,9 @@ double cnt = 0;
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(g.ROBOT.rangeFinder.getDistanceInches() < 10){
+      g.DRIVETRAIN.speedLimiter = 0.5;
+    }
     return false;
   }
 }

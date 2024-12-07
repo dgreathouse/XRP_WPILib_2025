@@ -27,6 +27,7 @@ public class g {
         public static final double driverControllerDeadband = 0.02;
         public static final Trigger DRIVER_RESET_YAW = driverController.triangle();
         public static final Trigger DRIVER_EXTEND_ARM = driverController.R1();
+        public static final Trigger DRIVER_TOGGLE_SPEED = driverController.cross();
 
     }
     public static class ROBOT{
@@ -45,6 +46,7 @@ public class g {
         public static final double MOTOR_CNTS_PER_SHAFT_REV = 12.0;
         public static final double WHEEL_COUNTS_PER_REV = MOTOR_CNTS_PER_SHAFT_REV * GEAR_RATIO;// 585;
         public static WheelSpeeds wheelSpeeds = new WheelSpeeds();
+        public static double speedLimiter = 0.5;
         public static final double TURN_KP = 0.008;
         public static final double TURN_KI = 0.01;
         public static final double TURN_KD = 0.0;

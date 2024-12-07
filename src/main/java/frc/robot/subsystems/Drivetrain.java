@@ -46,6 +46,7 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double _xSpeed, double _zRotation) {
     _xSpeed = MathUtil.applyDeadband(_xSpeed, g.OI.driverControllerDeadband);
     _zRotation = MathUtil.applyDeadband(_zRotation, g.OI.driverControllerDeadband);
+    _xSpeed *= g.DRIVETRAIN.speedLimiter;
     WheelSpeeds speeds = arcadeDriveIK(_xSpeed, _zRotation, true);
  
     m_leftMotor.set(speeds.left);
@@ -138,5 +139,13 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Gyro Angle", getAngle());
     SmartDashboard.putNumber("LeftEncoderDistance_inch", getLeftDistanceInch());
     SmartDashboard.putNumber("RightEncoderDistance_inch", getRightDistanceInch());
+  }
+
+  public void toggleSpeed() {
+    if(g.DRIVETRAIN.speedLimiter > 0.6){
+      g.DRIVETRAIN.speedLimiter = 0.5;
+    }else {
+      g.DRIVETRAIN.speedLimiter = 1.0;
+    }
   }
 }
