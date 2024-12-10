@@ -46,7 +46,7 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double _xSpeed, double _zRotation) {
     _xSpeed = MathUtil.applyDeadband(_xSpeed, g.OI.driverControllerDeadband);
     _zRotation = MathUtil.applyDeadband(_zRotation, g.OI.driverControllerDeadband);
-    _xSpeed *= g.DRIVETRAIN.speedLimiter;
+    //_xSpeed *= g.DRIVETRAIN.speedLimiter;
     WheelSpeeds speeds = arcadeDriveIK(_xSpeed, _zRotation, true);
  
     m_leftMotor.set(speeds.left);

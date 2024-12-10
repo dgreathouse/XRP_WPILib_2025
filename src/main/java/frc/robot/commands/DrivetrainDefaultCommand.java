@@ -40,9 +40,9 @@ double cnt = 0;
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(g.ROBOT.rangeFinder.getDistanceInches() < 10){
-      g.DRIVETRAIN.speedLimiter = 0.5;
-    }
+    // if(g.ROBOT.rangeFinder.getDistanceInches() < 10){
+    //   g.DRIVETRAIN.speedLimiter = 0.5;
+    // }
     return false;
   }
 }
