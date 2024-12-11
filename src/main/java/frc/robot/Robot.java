@@ -42,9 +42,7 @@ public class Robot extends TimedRobot {
   }
 
   private void configureButtonBindings() {
-    g.OI.DRIVER_RESET_YAW.onTrue(new InstantCommand(() -> {g.ROBOT.drive.resetGyro();}, g.ROBOT.drive));
     g.OI.DRIVER_EXTEND_ARM.onTrue(new InstantCommand(() -> {g.ROBOT.arm.toggleAngle();}, g.ROBOT.arm));
-    g.OI.DRIVER_TOGGLE_SPEED.onTrue(new InstantCommand(() -> g.ROBOT.drive.toggleSpeed(), g.ROBOT.drive));
   }
 
   @Override
